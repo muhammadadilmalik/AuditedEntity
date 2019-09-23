@@ -22,7 +22,7 @@ namespace AuditedEntity
 			List<AuditReport> tAuditReport = new List<AuditReport>();
 			foreach (var tEntry in ChangeTracker.Entries())
 			{
-				if (tEntry.State == EntityState.Added || tEntry.State == EntityState.Modified || tEntry.State == EntityState.Deleted)
+				if ((tEntry.State == EntityState.Added || tEntry.State == EntityState.Modified || tEntry.State == EntityState.Deleted) && tEntry.Entity is IAuditedEntity)
 				{
 					string entityName = tEntry.Entity.GetType().Name;
 					string entityType = tEntry.State.ToString();
@@ -111,5 +111,7 @@ namespace AuditedEntity
 
 		public DbSet<TestEntity> TestEntity { get; set; }
 		public DbSet<AuditReport> AuditReport { get; set; }
+		public DbSet<TestEntity1> TestEntity1 { get; set; }
+		public DbSet<TestEntityWithoutAudit> TestEntityWithoutAudit { get; set; }
 	}
 }
